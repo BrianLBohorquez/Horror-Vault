@@ -1,0 +1,10 @@
+{
+  "name": "horror-vault",
+  "type": "module",
+  "imports": {
+    "#*": "./*.js"
+  },
+  "scripts": {
+    "db:schema": "psql -d horror_vault -f db/schema.sql"
+  }
+}
