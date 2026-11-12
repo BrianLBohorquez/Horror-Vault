@@ -3,7 +3,8 @@ import db from "#db/client";
 export async function createMovie(
   title,
   year,
-  subgenreID,
+  posterUrl,
+  subgenreId,
   rating,
   review,
   liked,
@@ -11,21 +12,22 @@ export async function createMovie(
 ) {
   const sql = `
   INSERT INTO movies
-    (title, year, subgenre_id, rating, review, liked, date_logged)
+    (title, year, poster_url, subgenre_id, rating, review, liked, date_logged)
   VALUES
-    ($1, $2, $3, $4, $5, $6, $7)
+    ($1, $2, $3, $4, $5, $6, $7, $8)
   RETURNING *
   `;
   const {
-    rows: [movies],
+    rows: [movie],
   } = await db.query(sql, [
     title,
     year,
-    subgenreID,
+    posterUrl,
+    subgenreId,
     rating,
     review,
     liked,
     dateLogged,
   ]);
-  return movies;
+  return movie;
 }
