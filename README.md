@@ -32,9 +32,11 @@ It will have a sign-up/login feature so people can browse the selection and save
   User story:
   As a visitor I'd like to see other movies within the same subgenre so clicking a "more like this" expands a selection to see all titles of the subgenre
 
-## Stretch goals
+- User ratings and reviews, where users can post their own comments under each movie, their own rating being just a percentage based off "thumbs up/thumbs down" as to display alongside each title
+  User story:
+  As a visitor I'd like to validate Brian's judgement for movies by contributing to a comments section and a like ratio so that I can share my own feelings towards Brian's opinions and maybe help show any biases he might have to help future visitors' experience
 
-- User ratings and reviews, where maybe users can post their own ratings and reviews, maybe just a percentage based "thumbs up/thumbs down" as to maybe display alongside each title as-to validate my own judgement for people, i.e. a highly rated movie with a larger thumbs down percentage than thumbs up shows maybe a bias on my part, which I think would be useful for the site's function
+## Stretch goals
 
 - A Suggested For You function with suggestions based on the subgenre a user has watched or liked most.
 
@@ -43,6 +45,8 @@ It will have a sign-up/login feature so people can browse the selection and save
 - A letterboxd link to the movie for more expansive details on the movie
 
 - Maybe also a directors table to also sort by or search by
+
+-Comme
 
 ## Project management
 
