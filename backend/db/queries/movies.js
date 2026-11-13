@@ -31,3 +31,73 @@ export async function createMovie(
   ]);
   return movie;
 }
+
+export async function getMovies() {
+  const sql = `
+  SELECT movies.*, subgenres.name AS subgenre
+  FROM
+    movies
+    JOIN subgenres ON subgenres.id = movies.subgenre_id
+  ORDER BY title
+  `;
+  const { rows: movies } = await db.query(sql);
+  return movies;
+}
+
+export async function getMovieById(id) {
+  const sql = `
+  SELECT movies.*, subgenres.name AS subgenre
+  FROM
+    movies
+    JOIN subgenres ON subgenres.id = movies.subgenre_id
+  WHERE movies.id = $1
+  `;
+  const {
+    rows: [movie],
+  } = await db.query(sql, [id]);
+  return movie;
+}
+
+export async function getRecentMovies() {
+  const sql = `
+  SELECT movies.*, subgenres.name AS subgenre
+  FROM
+    movies
+    JOIN subgenres ON subgenres.id = movies.subgenre_id
+  ORDER BY date_logged DESC
+  LIMIT 10
+  `;
+  const { rows: movies } = await db.query(sql);
+  return movies;
+}
+
+export async function getRandomMovie() {
+  const sql = `
+  SELECT movies.*, subgenres.name AS subgenre
+  FROM
+    movies
+    JOIN subgenres ON subgenres.id = movies.subgenre_id
+  ORDER BY random()
+  LIMIT 1
+  `;
+  const {
+    rows: [movie],
+  } = await db.query(sql);
+  return movie;
+}
+
+export async function getSimilarMovies(subgenreId, movieId) {
+  const sql = `
+  SELECT movies.*, subgenres.name AS subgenre
+  FROM
+    movies
+    JOIN subgenres ON subgenres.id = movies.subgenre_id
+  WHERE movies.subgenre_id = $1
+    AND movies.id <> $2
+    AND movies.rating IS NOT NULL
+  ORDER BY movies.liked DESC, movies.rating DESC
+  LIMIT 6
+  `;
+  const { rows: movies } = await db.query(sql, [subgenreId, movieId]);
+  return movies;
+}
