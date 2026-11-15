@@ -3,6 +3,9 @@ const app = express();
 export default app;
 
 import usersRouter from "#api/users";
+import subgenresRouter from "#api/subgenres";
+import moviesRouter from "#api/movies";
+import watchlistRouter from "#api/watchlist";
 import getUserFromToken from "#middleware/getUserFromToken";
 import handlePostgresErrors from "#middleware/handlePostgresErrors";
 import cors from "cors";
@@ -20,6 +23,9 @@ app.use(getUserFromToken);
 app.get("/", (req, res) => res.send("Hello, World!"));
 
 app.use("/users", usersRouter);
+app.use("/subgenres", subgenresRouter);
+app.use("/movies", moviesRouter);
+app.use("/watchlist", watchlistRouter);
 
 app.use(handlePostgresErrors);
 app.use((err, req, res, next) => {

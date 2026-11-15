@@ -13,3 +13,13 @@ export async function createSubgenre(name) {
   } = await db.query(sql, [name]);
   return subgenre;
 }
+
+export async function getSubgenres() {
+  const sql = `
+  SELECT *
+  FROM subgenres
+  ORDER BY name
+  `;
+  const { rows: subgenres } = await db.query(sql);
+  return subgenres;
+}
