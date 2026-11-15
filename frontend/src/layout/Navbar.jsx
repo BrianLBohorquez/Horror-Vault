@@ -10,8 +10,12 @@ export default function Navbar() {
         <p>Frontend Template</p>
       </NavLink>
       <nav>
+        <NavLink to="/movies">Movies</NavLink>
         {token ? (
-          <button onClick={logout}>Log out</button>
+          <>
+            <NavLink to="/watchlist">Watchlist</NavLink>
+            <button onClick={logout}>Log out</button>
+          </>
         ) : (
           <NavLink to="/login">Log in</NavLink>
         )}
