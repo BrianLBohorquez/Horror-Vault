@@ -21,7 +21,7 @@ export async function getWatchlistByUserId(userId) {
     watchlist
     JOIN movies ON movies.id = watchlist.movie_id
   WHERE watchlist.user_id = $1
-  ORDER BY watchlist.id
+  ORDER BY watchlist.watched, watchlist.id DESC
   `;
   const { rows: watchlist } = await db.query(sql, [userId]);
   return watchlist;
