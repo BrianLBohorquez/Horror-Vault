@@ -10,3 +10,25 @@ export async function getMovies() {
     return [];
   }
 }
+
+export async function getMovie(id) {
+  try {
+    const response = await fetch(API + "/movies/" + id);
+    const result = await response.json();
+    return result;
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+}
+
+export async function getSimilarMovies(id) {
+  try {
+    const response = await fetch(API + "/movies/" + id + "/similar");
+    const result = await response.json();
+    return result;
+  } catch (e) {
+    console.error(e);
+    return [];
+  }
+}
