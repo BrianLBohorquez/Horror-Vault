@@ -3,6 +3,7 @@ import Layout from "./layout/Layout";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
 import MoviesPage from "./movies/MoviesPage";
+import MovieDetails from "./movies/MovieDetails";
 
 export default function App() {
   return (
@@ -10,7 +11,7 @@ export default function App() {
       <Route element={<Layout />}>
         <Route index element={<p>Home page</p>} />
         <Route path="/movies" element={<MoviesPage />} />
-        <Route path="/movies/:id" element={<p>Movie details page</p>} />
+        <Route path="/movies/:id" element={<MovieDetails />} />
         <Route path="/watchlist" element={<p>Watchlist page</p>} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />

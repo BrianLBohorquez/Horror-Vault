@@ -10,3 +10,14 @@ export async function getMovies() {
     return [];
   }
 }
+
+export async function getMovie(id) {
+  try {
+    const response = await fetch(API + "/movies/" + id);
+    const result = await response.json();
+    return result;
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+}
