@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router";
 import { getMovies } from "../api/movies";
 import { getSubgenres } from "../api/subgenres";
 
@@ -8,7 +9,8 @@ export default function MoviesPage() {
   const [movies, setMovies] = useState([]);
   const [subgenres, setSubgenres] = useState([]);
   const [search, setSearch] = useState("");
-  const [subgenre, setSubgenre] = useState("");
+  const [searchParams] = useSearchParams();
+  const [subgenre, setSubgenre] = useState(searchParams.get("subgenre") || "");
 
   const syncMovies = async () => {
     const data = await getMovies();

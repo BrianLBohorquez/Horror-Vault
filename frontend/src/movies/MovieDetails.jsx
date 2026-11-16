@@ -1,18 +1,27 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router";
-import { getMovie } from "../api/movies";
+import { useParams, Link } from "react-router";
+import { getMovie, getSimilarMovies } from "../api/movies";
+
+import MovieList from "./MovieList";
 
 export default function MovieDetails() {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
+  const [similarMovies, setSimilarMovies] = useState([]);
 
   const syncMovie = async () => {
     const data = await getMovie(id);
     setMovie(data);
   };
 
+  const syncSimilarMovies = async () => {
+    const data = await getSimilarMovies(id);
+    setSimilarMovies(data);
+  };
+
   useEffect(() => {
     syncMovie();
+    syncSimilarMovies();
   }, [id]);
 
   if (!movie) return <p>Loading...</p>;
@@ -31,6 +40,11 @@ export default function MovieDetails() {
       {movie.liked && <p>Liked</p>}
       <p>Logged {new Date(movie.date_logged).toLocaleDateString()}</p>
       {movie.review && <p>{movie.review}</p>}
+      <h2>More like this</h2>
+      <MovieList movies={similarMovies} />
+      <Link to={"/movies?subgenre=" + encodeURIComponent(movie.subgenre)}>
+        See more {movie.subgenre}
+      </Link>
     </>
   );
 }
