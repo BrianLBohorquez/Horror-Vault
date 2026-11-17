@@ -138,3 +138,12 @@ Watchlist (must be logged in)
 ![Watchlist](wireframe/Watchlist.jpeg)
 
 ![Login and Register](wireframe/LoginRegister.jpeg)
+
+## Usage
+
+1. Create a PostgreSQL database named horror_vault.
+2. In backend, copy example.env to .env and fill in the environment variables. TMDB_TOKEN is used by the seed to get the posters.
+3. In frontend, copy example.env to .env.
+4. Run npm install in backend and frontend folders
+5. In backend, run npm run db:reset.
+6. Then run npm run dev in backend and frontend.
