@@ -25,6 +25,7 @@ function MovieListItem({ movie }) {
       <Link to={"/movies/" + movie.id}>{movie.title}</Link>
       <p>{movie.year}</p>
       <p>{movie.subgenre}</p>
+      {movie.rating ? <p>Rating: {movie.rating}</p> : <p>Not rated</p>}
     </li>
   );
 }

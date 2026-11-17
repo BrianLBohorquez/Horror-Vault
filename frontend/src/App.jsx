@@ -4,13 +4,14 @@ import Login from "./auth/Login";
 import Register from "./auth/Register";
 import MoviesPage from "./movies/MoviesPage";
 import MovieDetails from "./movies/MovieDetails";
+import HomePage from "./home/HomePage";
 import WatchlistPage from "./watchlist/WatchlistPage";
 
 export default function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route index element={<p>Home page</p>} />
+        <Route index element={<HomePage />} />
         <Route path="/movies" element={<MoviesPage />} />
         <Route path="/movies/:id" element={<MovieDetails />} />
         <Route path="/watchlist" element={<WatchlistPage />} />
