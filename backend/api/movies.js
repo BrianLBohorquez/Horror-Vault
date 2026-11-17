@@ -9,6 +9,9 @@ import {
   getRandomMovies,
   getSimilarMovies,
 } from "#db/queries/movies";
+import { createComment, getCommentsByMovieId } from "#db/queries/comments";
+import requireBody from "#middleware/requireBody";
+import requireUser from "#middleware/requireUser";
 
 router.get("/", async (req, res) => {
   const movies = await getMovies();
@@ -40,3 +43,19 @@ router.get("/:id/similar", async (req, res) => {
   const movies = await getSimilarMovies(req.movie.subgenre_id, req.movie.id);
   res.send(movies);
 });
+
+router.get("/:id/comments", async (req, res) => {
+  const comments = await getCommentsByMovieId(req.movie.id);
+  res.send(comments);
+});
+
+router.post(
+  "/:id/comments",
+  requireUser,
+  requireBody(["body"]),
+  async (req, res) => {
+    const { body } = req.body;
+    const comment = await createComment(req.user.id, req.movie.id, body);
+    res.status(201).send(comment);
+  },
+);

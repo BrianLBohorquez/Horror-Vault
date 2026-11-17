@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS comments;
 DROP TABLE IF EXISTS watchlist;
 DROP TABLE IF EXISTS movies;
 DROP TABLE IF EXISTS subgenres;
@@ -31,4 +32,12 @@ CREATE TABLE watchlist (
   user_id integer NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   movie_id integer NOT NULL REFERENCES movies(id) ON DELETE CASCADE,
   watched boolean NOT NULL DEFAULT false
+);
+
+CREATE TABLE comments (
+  id serial PRIMARY KEY,
+  user_id integer NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  movie_id integer NOT NULL REFERENCES movies(id) ON DELETE CASCADE,
+  body text NOT NULL,
+  date_posted date NOT NULL DEFAULT CURRENT_DATE
 );

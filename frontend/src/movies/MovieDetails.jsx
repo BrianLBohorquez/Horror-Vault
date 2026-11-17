@@ -2,9 +2,12 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router";
 import { getMovie, getSimilarMovies } from "../api/movies";
 import { addToWatchlist } from "../api/watchlist";
+import { getComments } from "../api/comments";
+import { getAccount } from "../api/users";
 import { useAuth } from "../auth/AuthContext";
 
 import MovieList from "./MovieList";
+import Comments from "./Comments";
 
 export default function MovieDetails() {
   const { id } = useParams();
@@ -12,6 +15,8 @@ export default function MovieDetails() {
 
   const [movie, setMovie] = useState(null);
   const [similarMovies, setSimilarMovies] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [account, setAccount] = useState(null);
   const [added, setAdded] = useState(false);
   const [error, setError] = useState(null);
 
@@ -25,9 +30,21 @@ export default function MovieDetails() {
     setSimilarMovies(data);
   };
 
+  const syncComments = async () => {
+    const data = await getComments(id);
+    setComments(data);
+  };
+
+  const syncAccount = async () => {
+    const data = await getAccount(token);
+    setAccount(data);
+  };
+
   useEffect(() => {
     syncMovie();
     syncSimilarMovies();
+    syncComments();
+    if (token) syncAccount();
     setAdded(false);
     setError(null);
   }, [id]);
@@ -65,6 +82,12 @@ export default function MovieDetails() {
         </button>
       )}
       {error && <p role="alert">{error}</p>}
+      <Comments
+        movieId={movie.id}
+        comments={comments}
+        account={account}
+        syncComments={syncComments}
+      />
       <h2>More like this</h2>
       <MovieList movies={similarMovies} />
       <Link to={"/movies?subgenre=" + encodeURIComponent(movie.subgenre)}>
