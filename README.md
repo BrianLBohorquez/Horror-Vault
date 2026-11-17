@@ -2,15 +2,23 @@
 
 A horror movie database built from my Letterboxd ratings to which help recommend and find new movies to watch
 
-## Elevator pitch
+## Overview
 
-Horror Vault will be a horror movie database built from my own Letterboxd ratings and reviews. Every movie will be tagged by subgenre, like "slasher", "folk horror", "found footage"... so you can browse by the kind of horror you're in the mood for based off my own appraisals of said movies and/or then find similar movies based off the tags and my ratings.
+Horror Vault is a horror movie database built from my own Letterboxd ratings and reviews. Every movie is tagged by a subgenre like "slasher", "folk horror", "found footage"... so you can browse by the kind of horror you're in the mood for based off my own appraisals of said movies and/or then find similar movies based off the tags and my ratings!
 
-It will have a sign-up/login feature so people can browse the selection and save movies to their watchlist and mark what they've watched. Every movie page suggests more picks from the same subgenre, ranked by my ratings. It's like a smaller Letterboxd, but (for now) just built around horror and sorted and presented off my own estimations of the films as an interactive movie blog of sorts.
+It has a sign-up/login feature so people can browse the selection and save movies to their watchlist and mark what they've watched. Every movie page suggests more picks from the same subgenre, ranked by my ratings. It's like a smaller Letterboxd, but (for now) just built around horror and sorted and presented off "Brian's"(my own) estimations of the films as an interactive movie blog of sorts.
 
-## MVP core features
+## Screenshots
 
-- A Homepage with recent entries and/or random suggested highly regarded movies
+![Home page](HorrorVaultRoughHomepage.png)
+
+![Movie details page](HorrorVaultRoughMovieDetailsPage.png)
+
+![Watchlist page](HorrorVaultRoughWatchlistPage.png)
+
+## Core features
+
+- A Homepage with recent entries and random suggested highly regarded movies
   User story:
   As a visitor I'd like to see what 'Brian' has been seeing and some random suggestions based off what he's rated highly already so that I can find something unexpected to watch
 
@@ -32,9 +40,9 @@ It will have a sign-up/login feature so people can browse the selection and save
   User story:
   As a visitor I'd like to see other movies within the same subgenre so clicking a "more like this" expands a selection to see all titles of the subgenre
 
-- User ratings and reviews, where users can post their own comments under each movie, their own rating being just a percentage based off "thumbs up/thumbs down" as to display alongside each title
+- A comments section under each movie where logged-in users can post their own comments and delete them
   User story:
-  As a visitor I'd like to validate Brian's judgement for movies by contributing to a comments section and a like ratio so that I can share my own feelings towards Brian's opinions and maybe help show any biases he might have to help future visitors' experience
+  As a visitor I'd like to validate Brian's judgement for movies by contributing to a comments section so that I can share my own feelings towards Brian's opinions and maybe help show any biases he might have to help future visitors' experience
 
 ## Stretch goals
 
@@ -46,26 +54,35 @@ It will have a sign-up/login feature so people can browse the selection and save
 
 - Maybe also a directors table to also sort by or search by
 
--Comme
+- User ratings as a percentage based off "thumbs up/thumbs down" to display alongside each title
 
-## Project management
+- A second subgenre tag for movies that fit more than one
 
-Tickets are tracked on a GitHub Projects board for this repo, with To Do, In Progress and Done columns.
+## Tech stack
 
-Since this is a solo project, every ticket is assigned to me, and I'll work through them in this order:
+- Database: PostgreSQL
+- Backend: Node.js and Express
+- Frontend: React, React Router, Vite and Tailwind CSS
+- Data: my Letterboxd export and the TMDB API for posters
+- Tools: Thunder Client and GitHub Projects
 
-1. Database tables
-2. Movie data and seed file (Letterboxd data, subgenres, posters)
-3. Users routes (register, login)
-4. Movies and subgenres routes
-5. Watchlist routes
-6. React setup: page routes and nav bar
-7. Account page (login and register forms)
-8. Home page (recent and random picks)
-9. Movies page (search)
-10. Movie details page (more like this, add to watchlist)
-11. Watchlist page
-12. Styling
+## Architecture
+
+The backend is an Express API connected to the PostgreSQL database, and the React frontend calls it with fetch.
+
+Horror-Vault
+backend
+api - routes
+db - schema, seed and Letterboxd data
+queries - SQL for each table
+middleware - login and request checks
+utils - login tokens
+frontend
+src
+api - fetch calls to the backend
+auth - login and register
+home, movies, watchlist - the pages
+layout - navbar
 
 ## Database schema
 
@@ -99,6 +116,14 @@ CREATE TABLE watchlist (
   movie_id integer NOT NULL REFERENCES movies(id) ON DELETE CASCADE,
   watched boolean NOT NULL DEFAULT false
 );
+
+CREATE TABLE comments (
+  id serial PRIMARY KEY,
+  user_id integer NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  movie_id integer NOT NULL REFERENCES movies(id) ON DELETE CASCADE,
+  body text NOT NULL,
+  date_posted date NOT NULL DEFAULT CURRENT_DATE
+);
 ```
 
 ## API endpoints
@@ -107,6 +132,7 @@ Users
 
 - POST /users/register - creates a new user (users)
 - POST /users/login - logs a user in (users)
+- GET /users/me - gets the logged-in user's id and username (users)
 
 Subgenres
 
@@ -119,6 +145,8 @@ Movies
 - GET /movies/random - gets random highly rated movies (movies)
 - GET /movies/:id - gets one movie (movies, subgenres)
 - GET /movies/:id/similar - gets my highest-rated or liked movies in the same subgenre (movies)
+- GET /movies/:id/comments - gets the comments on a movie (comments, users)
+- POST /movies/:id/comments - adds a comment to a movie, must be logged in (comments)
 
 Watchlist (must be logged in)
 
@@ -127,17 +155,9 @@ Watchlist (must be logged in)
 - PUT /watchlist/:id - marks a saved movie as watched or not watched (watchlist)
 - DELETE /watchlist/:id - removes a movie from the user's watchlist (watchlist)
 
-## Wireframe
+Comments (must be logged in)
 
-![Home](wireframe/Home.jpeg)
-
-![Movies](wireframe/Movies.jpeg)
-
-![Movie details](wireframe/Movies-details.jpeg)
-
-![Watchlist](wireframe/Watchlist.jpeg)
-
-![Login and Register](wireframe/LoginRegister.jpeg)
+- DELETE /comments/:id - deletes the user's own comment (comments)
 
 ## Usage
 
@@ -147,3 +167,7 @@ Watchlist (must be logged in)
 4. Run npm install in backend and frontend folders
 5. In backend, run npm run db:reset.
 6. Then run npm run dev in backend and frontend.
+
+## Credits
+
+Movie ratings and reviews are my own from Letterboxd. Movie posters come from TMDB. This product uses the TMDB API but is not endorsed or certified by TMDB.

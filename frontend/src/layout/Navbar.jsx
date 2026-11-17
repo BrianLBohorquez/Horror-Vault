@@ -7,7 +7,7 @@ export default function Navbar() {
   return (
     <header id="navbar">
       <NavLink id="brand" to="/">
-        <p>Frontend Template</p>
+        <p>Horror Vault</p>
       </NavLink>
       <nav>
         <NavLink to="/movies">Movies</NavLink>

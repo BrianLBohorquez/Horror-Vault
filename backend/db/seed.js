@@ -1,7 +1,6 @@
 import db from "#db/client";
 import { createMovie } from "#db/queries/movies";
 import { createSubgenre } from "#db/queries/subgenres";
-import { createUser } from "#db/queries/users";
 import { parse } from "csv-parse/sync";
 import fs from "fs";
 
@@ -11,8 +10,6 @@ await db.end();
 console.log("🌱 Database seeded.");
 
 async function seed() {
-  await createUser("foo", "bar");
-
   const csv = fs.readFileSync("db/horror_movies.csv", "utf8");
   const movies = parse(csv, { columns: true });
 
