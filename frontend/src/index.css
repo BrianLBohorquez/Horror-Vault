@@ -1,6 +1,28 @@
 @import "tailwindcss";
 
+@import "tailwindcss";
+
 @layer base {
+  body {
+    @apply bg-neutral-950 text-neutral-200;
+  }
+
+  main {
+    @apply p-4;
+  }
+
+  h1 {
+    @apply text-3xl font-bold text-red-600 mb-4;
+  }
+
+  h2 {
+    @apply text-2xl font-semibold text-red-500 mt-6 mb-2;
+  }
+
+  a {
+    @apply text-red-400 hover:text-red-300;
+  }
+
   img {
     width: 8rem;
   }
