@@ -6,7 +6,7 @@ import {
   getMovies,
   getMovieById,
   getRecentMovies,
-  getRandomMovie,
+  getRandomMovies,
   getSimilarMovies,
 } from "#db/queries/movies";
 
@@ -21,8 +21,8 @@ router.get("/recent", async (req, res) => {
 });
 
 router.get("/random", async (req, res) => {
-  const movie = await getRandomMovie();
-  res.send(movie);
+  const movies = await getRandomMovies();
+  res.send(movies);
 });
 
 router.param("id", async (req, res, next, id) => {

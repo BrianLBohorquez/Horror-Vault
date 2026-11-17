@@ -71,19 +71,18 @@ export async function getRecentMovies() {
   return movies;
 }
 
-export async function getRandomMovie() {
+export async function getRandomMovies() {
   const sql = `
   SELECT movies.*, subgenres.name AS subgenre
   FROM
     movies
     JOIN subgenres ON subgenres.id = movies.subgenre_id
+  WHERE movies.rating >= 4
   ORDER BY random()
-  LIMIT 1
+  LIMIT 4
   `;
-  const {
-    rows: [movie],
-  } = await db.query(sql);
-  return movie;
+  const { rows: movies } = await db.query(sql);
+  return movies;
 }
 
 export async function getSimilarMovies(subgenreId, movieId) {
