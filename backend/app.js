@@ -6,6 +6,7 @@ import usersRouter from "#api/users";
 import subgenresRouter from "#api/subgenres";
 import moviesRouter from "#api/movies";
 import watchlistRouter from "#api/watchlist";
+import commentsRouter from "#api/comments";
 import getUserFromToken from "#middleware/getUserFromToken";
 import handlePostgresErrors from "#middleware/handlePostgresErrors";
 import cors from "cors";
@@ -26,6 +27,7 @@ app.use("/users", usersRouter);
 app.use("/subgenres", subgenresRouter);
 app.use("/movies", moviesRouter);
 app.use("/watchlist", watchlistRouter);
+app.use("/comments", commentsRouter);
 
 app.use(handlePostgresErrors);
 app.use((err, req, res, next) => {
