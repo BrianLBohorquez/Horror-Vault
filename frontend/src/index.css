@@ -1,10 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Metal+Mania&display=swap");
 @import "tailwindcss";
 
-@import "tailwindcss";
+@theme {
+  --font-metal: "Metal Mania", sans-serif;
+}
 
 @layer base {
   body {
-    @apply bg-neutral-950 text-neutral-200;
+    @apply bg-neutral-950 text-neutral-200 font-metal;
   }
 
   main {
@@ -25,5 +28,13 @@
 
   img {
     width: 8rem;
+  }
+
+  #brand {
+    @apply text-5xl font-bold;
+  }
+
+  #navbar {
+    @apply text-2xl;
   }
 }
