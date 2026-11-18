@@ -2,7 +2,7 @@ import { Link } from "react-router";
 
 export default function MovieList({ movies }) {
   return (
-    <ul>
+    <ul className="flex flex-wrap gap-6">
       {movies.map((movie) => (
         <MovieListItem key={movie.id} movie={movie} />
       ))}
@@ -13,16 +13,17 @@ export default function MovieList({ movies }) {
 function MovieListItem({ movie }) {
   return (
     <li>
-      {movie.poster_url ? (
-        <img
-          src={movie.poster_url}
-          alt={"Poster of " + movie.title}
-          loading="lazy"
-        />
-      ) : (
-        <p>No poster</p>
-      )}
-      <Link to={"/movies/" + movie.id}>{movie.title}</Link>
+      <Link to={"/movies/" + movie.id} title={movie.title}>
+        {movie.poster_url ? (
+          <img
+            src={movie.poster_url}
+            alt={"Poster of " + movie.title}
+            loading="lazy"
+          />
+        ) : (
+          <p>{movie.title}</p>
+        )}
+      </Link>
       <p>{movie.year}</p>
       <p>{movie.subgenre}</p>
       {movie.rating ? <p>Rating: {movie.rating}</p> : <p>Not rated</p>}
